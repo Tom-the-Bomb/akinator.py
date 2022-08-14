@@ -1,0 +1,19 @@
+[package]
+name = "akinator-py"
+authors = ["Tom-the-Bomb"]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+readme = "README.md"
+description = "Python bindings for akinator-rs"
+repository = "https://github.com/Tom-the-Bomb/akinator.py"
+homepage = "https://github.com/Tom-the-Bomb/akinator.py"
+
+[lib]
+name = "akinator"
+crate-type = ["cdylib"]
+
+[dependencies]
+akinator-rs = "0.1"
+pyo3 = { version = "0.16", features = ["extension-module"] }
+pyo3-asyncio = { version = "0.16", features = ["tokio-runtime"] }

@@ -1,0 +1,10 @@
+{
+    "editor.semanticTokenColorCustomizations": {
+        "enabled": true,
+        "rules": {
+            "*.mutable": {
+                "underline": false,
+            },
+        }
+    }
+}
