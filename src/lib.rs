@@ -55,7 +55,7 @@ impl Akinator {
 
         to_coro(py, async move {
             let mut writer = cloned.write()
-                .map_err(|e| Error::from(e))?;
+                .map_err(Error::from)?;
 
             writer.start().await
                 .map_err(|e| Error::from(e).into())
@@ -67,7 +67,7 @@ impl Akinator {
 
         to_coro(py, async move {
             let mut writer = cloned.write()
-                .map_err(|e| Error::from(e))?;
+                .map_err(Error::from)?;
 
             writer.answer(answer.into()).await
                 .map_err(|e| Error::from(e).into())
@@ -79,11 +79,11 @@ impl Akinator {
 
         to_coro(py, async move {
             let mut writer = cloned.write()
-                .map_err(|e| Error::from(e))?;
+                .map_err(Error::from)?;
 
             writer.win().await
                 .map(|result| {
-                    result.map(|g| Guess(g))
+                    result.map(Guess)
                 })
                 .map_err(|e| Error::from(e).into())
         })
@@ -94,7 +94,7 @@ impl Akinator {
 
         to_coro(py, async move {
             let mut writer = cloned.write()
-                .map_err(|e| Error::from(e))?;
+                .map_err(Error::from)?;
 
             writer.back().await
                 .map_err(|e| Error::from(e).into())
@@ -104,71 +104,71 @@ impl Akinator {
     #[getter]
     fn theme(&self) -> PyResult<Theme> {
         let reader = self.0.read()
-            .map_err(|e| Error::from(e))?;
+            .map_err(Error::from)?;
         Ok(reader.theme.into())
     }
 
     #[getter]
     fn language(&self) -> PyResult<Language> {
         let reader = self.0.read()
-            .map_err(|e| Error::from(e))?;
+            .map_err(Error::from)?;
         Ok(reader.language.into())
     }
 
     #[getter]
     fn child_mode(&self) -> PyResult<bool> {
         let reader = self.0.read()
-            .map_err(|e| Error::from(e))?;
+            .map_err(Error::from)?;
         Ok(reader.child_mode)
     }
 
     #[getter]
     fn question(&self) -> PyResult<Option<String>> {
         let reader = self.0.read()
-            .map_err(|e| Error::from(e))?;
+            .map_err(Error::from)?;
         Ok(reader.current_question.clone())
     }
 
     #[getter]
     fn progression(&self) -> PyResult<f32> {
         let reader = self.0.read()
-            .map_err(|e| Error::from(e))?;
+            .map_err(Error::from)?;
         Ok(reader.progression)
     }
 
     #[getter]
     fn step(&self) -> PyResult<usize> {
         let reader = self.0.read()
-            .map_err(|e| Error::from(e))?;
+            .map_err(Error::from)?;
         Ok(reader.step)
     }
 
     #[getter]
     fn first_guess(&self) -> PyResult<Option<Guess>> {
         let reader = self.0.read()
-            .map_err(|e| Error::from(e))?;
+            .map_err(Error::from)?;
 
         Ok(reader.first_guess
             .clone()
-            .map(|g| Guess(g)))
+            .map(Guess))
     }
 
     #[getter]
     fn guesses(&self) -> PyResult<Vec<Guess>> {
         let reader = self.0.read()
-            .map_err(|e| Error::from(e))?;
+            .map_err(Error::from)?;
 
         Ok(reader.guesses
             .clone()
             .into_iter()
-            .map(|g| Guess(g))
+            .map(Guess)
             .collect())
     }
 
     #[setter]
     fn set_theme(&mut self, theme: Theme) -> PyResult<()> {
         let mut writer = self.0.write()
-            .map_err(|e| Error::from(e))?;
+            .map_err(Error::from)?;
         writer.theme = theme.into();
 
         Ok(())
@@ -177,7 +177,7 @@ impl Akinator {
     #[setter]
     fn set_language(&mut self, language: Language) -> PyResult<()> {
         let mut writer = self.0.write()
-            .map_err(|e| Error::from(e))?;
+            .map_err(Error::from)?;
         writer.language = language.into();
 
         Ok(())
@@ -186,7 +186,7 @@ impl Akinator {
     #[setter]
     fn set_child_mode(&mut self, child_mode: bool) -> PyResult<()> {
         let mut writer = self.0.write()
-            .map_err(|e| Error::from(e))?;
+            .map_err(Error::from)?;
         writer.child_mode = child_mode;
 
         Ok(())
