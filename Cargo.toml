@@ -6,6 +6,7 @@ edition = "2021"
 license = "MIT"
 readme = "README.md"
 description = "Python bindings for akinator-rs"
+documentation = "https://docs.rs/akinator-py/latest/akinator/"
 repository = "https://github.com/Tom-the-Bomb/akinator.py"
 homepage = "https://github.com/Tom-the-Bomb/akinator.py"
 keywords = [
