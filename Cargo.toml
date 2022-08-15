@@ -8,6 +8,18 @@ readme = "README.md"
 description = "Python bindings for akinator-rs"
 repository = "https://github.com/Tom-the-Bomb/akinator.py"
 homepage = "https://github.com/Tom-the-Bomb/akinator.py"
+keywords = [
+    "akinator-py",
+    "akinator",
+    "python",
+    "async",
+    "pyo3",
+]
+categories = [
+    "Asynchronous",
+    "API Bindings",
+    "Games",
+]
 
 [lib]
 name = "akinator"
