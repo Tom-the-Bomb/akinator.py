@@ -70,12 +70,12 @@ impl From<AnswerEnum> for Answer {
     }
 }
 
-impl Into<AnswerEnum> for Answer {
-    fn into(self) -> AnswerEnum {
+impl From<Answer> for AnswerEnum {
+    fn from(answer: Answer) -> Self {
         cast_enum!(
+            Answer,
             Self,
-            AnswerEnum,
-            self,
+            answer,
             Yes,
             No,
             Idk,
@@ -98,12 +98,12 @@ impl From<ThemeEnum> for Theme {
     }
 }
 
-impl Into<ThemeEnum> for Theme {
-    fn into(self) -> ThemeEnum {
+impl From<Theme> for ThemeEnum {
+    fn from(theme: Theme) -> Self {
         cast_enum!(
+            Theme,
             Self,
-            ThemeEnum,
-            self,
+            theme,
             Characters,
             Animals,
             Objects,
@@ -137,12 +137,12 @@ impl From<LanguageEnum> for Language {
     }
 }
 
-impl Into<LanguageEnum> for Language {
-    fn into(self) -> LanguageEnum {
+impl From<Language> for LanguageEnum {
+    fn from(language: Language) -> Self {
         cast_enum!(
+            Language,
             Self,
-            LanguageEnum,
-            self,
+            language,
             English,
             Arabic,
             Chinese,
