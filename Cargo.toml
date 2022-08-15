@@ -18,9 +18,9 @@ keywords = [
     "pyo3",
 ]
 categories = [
-    "Asynchronous",
-    "API Bindings",
-    "Games",
+    "asynchronous",
+    "api-bindings",
+    "games",
 ]
 
 [lib]
