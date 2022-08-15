@@ -15,5 +15,6 @@ crate-type = ["cdylib"]
 
 [dependencies]
 akinator-rs = "0.1"
+tokio = { version = "1.20", features = ["full"] }
 pyo3 = { version = "0.16", features = ["extension-module"] }
 pyo3-asyncio = { version = "0.16", features = ["tokio-runtime"] }

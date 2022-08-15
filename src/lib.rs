@@ -1,5 +1,8 @@
 use akinator_rs::Akinator as AkinatorStruct;
-use std::sync::{Arc, RwLock};
+
+use std::sync::Arc;
+use tokio::sync::RwLock;
+
 use pyo3::prelude::*;
 use pyo3_asyncio::tokio::local_future_into_py as to_coro;
 
@@ -55,7 +58,7 @@ impl Akinator {
 
         to_coro(py, async move {
             let mut writer = cloned.write()
-                .map_err(Error::from)?;
+                .await;
 
             writer.start().await
                 .map_err(|e| Error::from(e).into())
@@ -67,7 +70,7 @@ impl Akinator {
 
         to_coro(py, async move {
             let mut writer = cloned.write()
-                .map_err(Error::from)?;
+                .await;
 
             writer.answer(answer.into()).await
                 .map_err(|e| Error::from(e).into())
@@ -79,7 +82,7 @@ impl Akinator {
 
         to_coro(py, async move {
             let mut writer = cloned.write()
-                .map_err(Error::from)?;
+                .await;
 
             writer.win().await
                 .map(|result| {
@@ -94,7 +97,7 @@ impl Akinator {
 
         to_coro(py, async move {
             let mut writer = cloned.write()
-                .map_err(Error::from)?;
+                .await;
 
             writer.back().await
                 .map_err(|e| Error::from(e).into())
@@ -102,94 +105,97 @@ impl Akinator {
     }
 
     #[getter]
-    fn theme(&self) -> PyResult<Theme> {
-        let reader = self.0.read()
-            .map_err(Error::from)?;
-        Ok(reader.theme.into())
+    fn theme(&self) -> Theme {
+        let reader = self.0
+            .blocking_read();
+
+        reader.theme.into()
     }
 
     #[getter]
-    fn language(&self) -> PyResult<Language> {
-        let reader = self.0.read()
-            .map_err(Error::from)?;
-        Ok(reader.language.into())
+    fn language(&self) -> Language {
+        let reader = self.0
+            .blocking_read();
+
+        reader.language.into()
     }
 
     #[getter]
-    fn child_mode(&self) -> PyResult<bool> {
-        let reader = self.0.read()
-            .map_err(Error::from)?;
-        Ok(reader.child_mode)
+    fn child_mode(&self) -> bool {
+        let reader = self.0
+            .blocking_read();
+
+        reader.child_mode
     }
 
     #[getter]
-    fn question(&self) -> PyResult<Option<String>> {
-        let reader = self.0.read()
-            .map_err(Error::from)?;
-        Ok(reader.current_question.clone())
+    fn question(&self) -> Option<String> {
+        let reader = self.0
+            .blocking_read();
+
+        reader.current_question.clone()
     }
 
     #[getter]
-    fn progression(&self) -> PyResult<f32> {
-        let reader = self.0.read()
-            .map_err(Error::from)?;
-        Ok(reader.progression)
+    fn progression(&self) -> f32 {
+        let reader = self.0
+            .blocking_read();
+
+        reader.progression
     }
 
     #[getter]
-    fn step(&self) -> PyResult<usize> {
-        let reader = self.0.read()
-            .map_err(Error::from)?;
-        Ok(reader.step)
+    fn step(&self) -> usize {
+        let reader = self.0
+            .blocking_read();
+
+        reader.step
     }
 
     #[getter]
-    fn first_guess(&self) -> PyResult<Option<Guess>> {
-        let reader = self.0.read()
-            .map_err(Error::from)?;
+    fn first_guess(&self) -> Option<Guess> {
+        let reader = self.0
+            .blocking_read();
 
-        Ok(reader.first_guess
+        reader.first_guess
             .clone()
-            .map(Guess))
+            .map(Guess)
     }
 
     #[getter]
-    fn guesses(&self) -> PyResult<Vec<Guess>> {
-        let reader = self.0.read()
-            .map_err(Error::from)?;
+    fn guesses(&self) -> Vec<Guess> {
+        let reader = self.0
+            .blocking_read();
 
-        Ok(reader.guesses
+        reader.guesses
             .clone()
             .into_iter()
             .map(Guess)
-            .collect())
+            .collect()
     }
 
     #[setter]
-    fn set_theme(&mut self, theme: Theme) -> PyResult<()> {
-        let mut writer = self.0.write()
-            .map_err(Error::from)?;
+    fn set_theme(&mut self, theme: Theme) {
+        let mut writer = self.0
+            .blocking_write();
+
         writer.theme = theme.into();
-
-        Ok(())
     }
 
     #[setter]
-    fn set_language(&mut self, language: Language) -> PyResult<()> {
-        let mut writer = self.0.write()
-            .map_err(Error::from)?;
+    fn set_language(&mut self, language: Language) {
+        let mut writer = self.0
+            .blocking_write();
+
         writer.language = language.into();
-
-        Ok(())
     }
 
     #[setter]
-    fn set_child_mode(&mut self, child_mode: bool) -> PyResult<()> {
-        let mut writer = self.0.write()
-            .map_err(Error::from)?;
-        writer.child_mode = child_mode;
+    fn set_child_mode(&mut self, child_mode: bool) {
+        let mut writer = self.0
+            .blocking_write();
 
-        Ok(())
+        writer.child_mode = child_mode;
     }
 }
 
