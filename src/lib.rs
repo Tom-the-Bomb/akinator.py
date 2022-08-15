@@ -32,7 +32,7 @@ impl Akinator {
         theme: Option<Theme>,
         language: Option<Language>,
         child_mode: Option<bool>,
-    ) -> PyResult<Self> {
+    ) -> Self {
         let mut akinator =
             AkinatorStruct::new();
 
@@ -48,9 +48,9 @@ impl Akinator {
             akinator = akinator.with_child_mode();
         }
 
-        Ok(Self(
+        Self(
             Arc::new(RwLock::new(akinator))
-        ))
+        )
     }
 
     fn start_game<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a pyo3::PyAny> {
@@ -208,7 +208,7 @@ fn akinator(py: Python<'_>, module: &PyModule) -> PyResult<()> {
     module.add_class::<Answer>()?;
     module.add_class::<Language>()?;
 
-    error::add_exceptions(&py, module)?;
+    error::add_exceptions(py, module)?;
 
     Ok(())
 }

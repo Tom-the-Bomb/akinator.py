@@ -40,7 +40,7 @@ pub enum Error {
     PoisonError,
 }
 
-pub(crate) fn add_exceptions(py: &Python<'_>, module: &PyModule) -> PyResult<()> {
+pub(crate) fn add_exceptions(py: Python<'_>, module: &PyModule) -> PyResult<()> {
     module.add("CantGoBackAnyFurther", py.get_type::<CantGoBackAnyFurther>())?;
     module.add("InvalidAnswer", py.get_type::<InvalidAnswer>())?;
     module.add("InvalidLanguage", py.get_type::<InvalidLanguage>())?;
@@ -48,13 +48,13 @@ pub(crate) fn add_exceptions(py: &Python<'_>, module: &PyModule) -> PyResult<()>
     module.add("NoMoreQuestions", py.get_type::<NoMoreQuestions>())?;
     module.add("TimeoutError", py.get_type::<TimeoutError>())?;
     module.add("TechnicalError", py.get_type::<TechnicalError>())?;
-    module.add("ServersDow", py.get_type::<ServersDown>())?;
+    module.add("ServersDown", py.get_type::<ServersDown>())?;
 
     Ok(())
 }
 
 impl From<Error> for PyErr {
-    fn from(error: Error) -> PyErr {
+    fn from(error: Error) -> Self {
         match error {
             Error::AkiError(err) => match err {
                 AkiError::CantGoBackAnyFurther =>
@@ -86,13 +86,13 @@ impl From<Error> for PyErr {
 }
 
 impl<T> From<PoisonError<T>> for Error {
-    fn from(_error: PoisonError<T>) -> Error {
-        Error::PoisonError
+    fn from(_error: PoisonError<T>) -> Self {
+        Self::PoisonError
     }
 }
 
 impl From<AkiError> for Error {
-    fn from(error: AkiError) -> Error {
-        Error::AkiError(error)
+    fn from(error: AkiError) -> Self {
+        Self::AkiError(error)
     }
 }
