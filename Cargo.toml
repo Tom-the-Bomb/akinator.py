@@ -13,6 +13,8 @@ keywords = [
     "akinator",
     "python",
     "async",
+    "game",
+    "ffi",
     "pyo3",
 ]
 categories = [
