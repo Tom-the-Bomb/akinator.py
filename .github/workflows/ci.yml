@@ -83,7 +83,7 @@ jobs:
         CIBW_BEFORE_BUILD_LINUX: >
           curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain=stable --profile=minimal -y &&
           rustup show
-        CIBW_BEFORE_ALL_LINUX: 'yum install -y openssl-devel || true && apt-get openssl -y || true'
+        CIBW_BEFORE_ALL_LINUX: 'yum install -y openssl-devel || apt-get openssl -y'
         CIBW_BUILD_VERBOSITY: 1
 
     - run: ${{ matrix.ls || 'ls -lh' }} wheelhouse/
