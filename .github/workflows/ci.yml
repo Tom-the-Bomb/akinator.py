@@ -84,9 +84,6 @@ jobs:
           curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain=stable --profile=minimal -y &&
           rustup show
         CIBW_BEFORE_ALL_LINUX: 'yum install -y openssl-devel'
-        CIBW_TEST_COMMAND: 'pytest {project}/test'
-        CIBW_TEST_REQUIRES: pytest requests
-        CIBW_TEST_SKIP: '*-macosx_arm64 *-macosx_universal2:arm64'
         CIBW_BUILD_VERBOSITY: 1
 
     - run: ${{ matrix.ls || 'ls -lh' }} wheelhouse/
