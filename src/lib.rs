@@ -14,7 +14,10 @@ use std::sync::Arc;
 use tokio::sync::RwLock;
 
 use pyo3::prelude::*;
-use pyo3_asyncio::tokio::local_future_into_py as to_coro;
+use pyo3_asyncio::tokio::{
+    get_current_locals,
+    local_future_into_py_with_locals as to_coro,
+};
 
 pub mod enums;
 pub mod error;
@@ -58,52 +61,64 @@ impl Akinator {
     fn start_game<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a pyo3::PyAny> {
         let cloned = self.0.clone();
 
-        to_coro(py, async move {
-            let mut writer = cloned.write()
-                .await;
+        to_coro(py,
+            get_current_locals(py)?,
+            async move {
+                let mut writer = cloned.write()
+                    .await;
 
-            writer.start().await
-                .map_err(|e| Error::from(e).into())
-        })
+                writer.start().await
+                    .map_err(|e| Error::from(e).into())
+            }
+        )
     }
 
     fn answer<'a>(&'a mut self, py: Python<'a>, answer: Answer) -> PyResult<&'a pyo3::PyAny> {
         let cloned = self.0.clone();
 
-        to_coro(py, async move {
-            let mut writer = cloned.write()
-                .await;
+        to_coro(py,
+            get_current_locals(py)?,
+            async move {
+                let mut writer = cloned.write()
+                    .await;
 
-            writer.answer(answer.into()).await
-                .map_err(|e| Error::from(e).into())
-        })
+                writer.answer(answer.into()).await
+                    .map_err(|e| Error::from(e).into())
+            }
+        )
     }
 
     fn win<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a pyo3::PyAny> {
         let cloned = self.0.clone();
 
-        to_coro(py, async move {
-            let mut writer = cloned.write()
-                .await;
+        to_coro(py,
+            get_current_locals(py)?,
+            async move {
+                let mut writer = cloned.write()
+                    .await;
 
-            writer.win().await
-                .map(|result| {
-                    result.map(Guess)
-                })
-                .map_err(|e| Error::from(e).into())
-        })
+                writer.win().await
+                    .map(|result| {
+                        result.map(Guess)
+                    })
+                    .map_err(|e| Error::from(e).into())
+            }
+        )
     }
 
     fn back<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a pyo3::PyAny> {
         let cloned = self.0.clone();
 
-        to_coro(py, async move {
-            let mut writer = cloned.write()
-                .await;
+        to_coro(py,
+            get_current_locals(py)?,
+            async move {
+                let mut writer = cloned.write()
+                    .await;
 
-            writer.back().await
-                .map_err(|e| Error::from(e).into())
-        })
+                writer.back().await
+                    .map_err(|e| Error::from(e).into())
+            }
+        )
     }
 
     #[getter]
