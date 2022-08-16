@@ -1,11 +1,11 @@
 use crate::{
-    models::Guess,
-    error::Error,
     enums::{
         Theme,
         Answer,
         Language,
     },
+    error::Error,
+    models::Guess,
 };
 
 use akinator_rs::Akinator as AkinatorStruct;
