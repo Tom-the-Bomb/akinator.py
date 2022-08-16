@@ -1,3 +1,13 @@
+use crate::{
+    models::Guess,
+    error::Error,
+    enums::{
+        Theme,
+        Answer,
+        Language,
+    },
+};
+
 use akinator_rs::Akinator as AkinatorStruct;
 
 use std::sync::Arc;
@@ -5,14 +15,6 @@ use tokio::sync::RwLock;
 
 use pyo3::prelude::*;
 use pyo3_asyncio::tokio::local_future_into_py as to_coro;
-
-use crate::models::Guess;
-use crate::error::Error;
-use crate::enums::{
-    Theme,
-    Answer,
-    Language,
-};
 
 pub mod enums;
 pub mod error;
