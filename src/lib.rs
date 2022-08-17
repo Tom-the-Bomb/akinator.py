@@ -9,15 +9,8 @@ use crate::{
 };
 
 use akinator_rs::Akinator as AkinatorStruct;
-
-use std::sync::Arc;
-use tokio::sync::RwLock;
-
+use tokio::runtime::Runtime;
 use pyo3::prelude::*;
-use pyo3_asyncio::tokio::{
-    get_current_locals,
-    local_future_into_py_with_locals as to_coro,
-};
 
 pub mod enums;
 pub mod error;
@@ -26,7 +19,7 @@ pub mod models;
 #[pyclass]
 #[derive(Debug, Clone)]
 pub struct Akinator(
-    Arc<RwLock<AkinatorStruct>>,
+    AkinatorStruct,
 );
 
 #[pymethods]
@@ -53,51 +46,31 @@ impl Akinator {
             akinator = akinator.with_child_mode();
         }
 
-        Self(
-            Arc::new(RwLock::new(akinator))
-        )
+        Self(akinator)
     }
 
-    fn start_game<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a pyo3::PyAny> {
-        let cloned = self.0.clone();
-
-        to_coro(py,
-            get_current_locals(py)?,
+    fn start_game<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<String>> {
+        Runtime::new()?.block_on(
             async move {
-                let mut writer = cloned.write()
-                    .await;
-
-                writer.start().await
+                self.0.start().await
                     .map_err(|e| Error::from(e).into())
             }
         )
     }
 
-    fn answer<'a>(&'a mut self, py: Python<'a>, answer: Answer) -> PyResult<&'a pyo3::PyAny> {
-        let cloned = self.0.clone();
-
-        to_coro(py,
-            get_current_locals(py)?,
+    fn answer<'a>(&'a mut self, _py: Python<'a>, answer: Answer) -> PyResult<Option<String>> {
+        Runtime::new()?.block_on(
             async move {
-                let mut writer = cloned.write()
-                    .await;
-
-                writer.answer(answer.into()).await
+                self.0.answer(answer.into()).await
                     .map_err(|e| Error::from(e).into())
             }
         )
     }
 
-    fn win<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a pyo3::PyAny> {
-        let cloned = self.0.clone();
-
-        to_coro(py,
-            get_current_locals(py)?,
+    fn win<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<Guess>> {
+        Runtime::new()?.block_on(
             async move {
-                let mut writer = cloned.write()
-                    .await;
-
-                writer.win().await
+                self.0.win().await
                     .map(|result| {
                         result.map(Guess)
                     })
@@ -106,16 +79,10 @@ impl Akinator {
         )
     }
 
-    fn back<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a pyo3::PyAny> {
-        let cloned = self.0.clone();
-
-        to_coro(py,
-            get_current_locals(py)?,
+    fn back<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<String>> {
+        Runtime::new()?.block_on(
             async move {
-                let mut writer = cloned.write()
-                    .await;
-
-                writer.back().await
+                self.0.back().await
                     .map_err(|e| Error::from(e).into())
             }
         )
@@ -123,68 +90,44 @@ impl Akinator {
 
     #[getter]
     fn theme(&self) -> Theme {
-        let reader = self.0
-            .blocking_read();
-
-        reader.theme.into()
+        self.0.theme.into()
     }
 
     #[getter]
     fn language(&self) -> Language {
-        let reader = self.0
-            .blocking_read();
-
-        reader.language.into()
+        self.0.language.into()
     }
 
     #[getter]
-    fn child_mode(&self) -> bool {
-        let reader = self.0
-            .blocking_read();
-
-        reader.child_mode
+    const fn child_mode(&self) -> bool {
+        self.0.child_mode
     }
 
     #[getter]
     fn question(&self) -> Option<String> {
-        let reader = self.0
-            .blocking_read();
-
-        reader.current_question.clone()
+        self.0.current_question.clone()
     }
 
     #[getter]
-    fn progression(&self) -> f32 {
-        let reader = self.0
-            .blocking_read();
-
-        reader.progression
+    const fn progression(&self) -> f32 {
+        self.0.progression
     }
 
     #[getter]
-    fn step(&self) -> usize {
-        let reader = self.0
-            .blocking_read();
-
-        reader.step
+    const fn step(&self) -> usize {
+        self.0.step
     }
 
     #[getter]
     fn first_guess(&self) -> Option<Guess> {
-        let reader = self.0
-            .blocking_read();
-
-        reader.first_guess
+        self.0.first_guess
             .clone()
             .map(Guess)
     }
 
     #[getter]
     fn guesses(&self) -> Vec<Guess> {
-        let reader = self.0
-            .blocking_read();
-
-        reader.guesses
+        self.0.guesses
             .clone()
             .into_iter()
             .map(Guess)
@@ -193,26 +136,17 @@ impl Akinator {
 
     #[setter]
     fn set_theme(&mut self, theme: Theme) {
-        let mut writer = self.0
-            .blocking_write();
-
-        writer.theme = theme.into();
+        self.0.theme = theme.into();
     }
 
     #[setter]
     fn set_language(&mut self, language: Language) {
-        let mut writer = self.0
-            .blocking_write();
-
-        writer.language = language.into();
+        self.0.language = language.into();
     }
 
     #[setter]
     fn set_child_mode(&mut self, child_mode: bool) {
-        let mut writer = self.0
-            .blocking_write();
-
-        writer.child_mode = child_mode;
+        self.0.child_mode = child_mode;
     }
 }
 
