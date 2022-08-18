@@ -19,6 +19,9 @@ macro_rules! cast_enum {
     }};
 }
 
+/// An enum class representing an answer given to the akinator
+///
+/// This is meant for the user to use to pass into methods such as `Akinator.answer`
 #[pyclass]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Answer {
@@ -29,6 +32,9 @@ pub enum Answer {
     ProbablyNot = 4,
 }
 
+/// An enum class representing the theme of an akinator game
+///
+/// This is meant for the user to use to pass into the Akinator constructor, or to set the theme property
 #[pyclass]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Theme {
@@ -37,6 +43,9 @@ pub enum Theme {
     Objects = 2,
 }
 
+/// An enum class representing the language of the akinator game
+///
+/// This is meant for the user to use to pass into the Akinator constructor, or to set the language property
 #[pyclass]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Language {
@@ -60,6 +69,15 @@ pub enum Language {
 
 #[pymethods]
 impl Answer {
+    /// a classmethod to return an `Answer` enum variant parsing from a `str`
+    /// useful when you have external user input
+    ///
+    /// aliases for answer variants are also accepted (trims WS & case-insensitive):
+    ///     - `yes | y | 0` => `Answer.Yes
+    ///     - `no | n | 1` => `Answer.No`
+    ///     - `i don(')?t know | idk | 2` => `Answer.Idk`
+    ///     - `probably | p | 3` => `Answer.Probably`
+    ///     - `probably not | pn | 4` => `Answer.ProbablyNot`
     #[classmethod]
     fn from_str(_cls: &PyType, answer: String) -> PyResult<Self> {
         AnswerEnum::try_from(answer)
@@ -68,7 +86,7 @@ impl Answer {
     }
 
     fn __repr__(&self) -> String {
-        format!("<Answer answer=\"{:?}\"", self)
+        format!("<Answer answer=\"{:?}\">", self)
     }
 
     fn __str__(&self) -> String {
@@ -78,13 +96,15 @@ impl Answer {
 
 #[pymethods]
 impl Theme {
+    /// a classmethod to return a `Theme` enum variant parsing from a `str`
+    /// useful when you have external user input
     #[classmethod]
     fn from_str(_cls: &PyType, theme: String) -> Self {
         Self::from(ThemeEnum::from(theme))
     }
 
     fn __repr__(&self) -> String {
-        format!("<Theme theme=\"{:?}\"", self)
+        format!("<Theme theme=\"{:?}\">", self)
     }
 
     fn __str__(&self) -> String {
@@ -94,6 +114,8 @@ impl Theme {
 
 #[pymethods]
 impl Language {
+    /// a classmethod to return a `Language` enum variant parsing from a `str`
+    /// useful when you have external user input
     #[classmethod]
     fn from_str(_cls: &PyType, language: String) -> PyResult<Self> {
         LanguageEnum::try_from(language)
@@ -102,7 +124,7 @@ impl Language {
     }
 
     fn __repr__(&self) -> String {
-        format!("<Language lang=\"{:?}\"", self)
+        format!("<Language lang=\"{:?}\">", self)
     }
 
     fn __str__(&self) -> String {

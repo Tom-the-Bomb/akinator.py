@@ -21,6 +21,19 @@ lazy_static! {
     static ref RUNTIME: Runtime = Runtime::new().unwrap();
 }
 
+/// Represents an akinator game
+///
+/// Parameters
+/// ----------
+/// theme : Optional[:class:`Theme`]
+///     the theme of the akinator game, would be one of `Characters`, `Animals` or `Objects`
+///     pass in using an answer enum, using the `from_str` classmethod if necessary, defaults to `Characters`
+/// language : Optional[:class:`Language`]
+///     the language for the akinator game, refer to the `Language` enum
+/// child_mode : Optional[bool]
+///     when set to `True`, NSFW content will not be provided
+///
+/// The parameters are also set as properties which also have a setter to change the values if necessary in the future
 #[pyclass]
 #[derive(Debug, Clone)]
 pub struct Akinator(
@@ -63,6 +76,12 @@ impl Akinator {
         )
     }
 
+    /// Starts the akinator game
+    /// and returns the first question
+    ///
+    /// Returns
+    /// -------
+    /// Optional[str]
     fn start_game<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<String>> {
         RUNTIME.block_on(
             async move {
@@ -72,6 +91,13 @@ impl Akinator {
         )
     }
 
+    /// Answers the akinator's current question
+    /// with the provided `answer`
+    /// and returns the next question
+    ///
+    /// Returns
+    /// -------
+    /// Optional[str]
     fn answer<'a>(&'a mut self, _py: Python<'a>, answer: Answer) -> PyResult<Option<String>> {
         RUNTIME.block_on(
             async move {
@@ -81,6 +107,13 @@ impl Akinator {
         )
     }
 
+    /// Tells the akinator to end the game and make its guess
+    /// should be called once when the `progression` is high enough such as `>=80.0`
+    /// and returns its best guess
+    ///
+    /// Returns
+    /// -------
+    /// Optional[:class:`Guess`]
     fn win<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<Guess>> {
         RUNTIME.block_on(
             async move {
@@ -93,6 +126,12 @@ impl Akinator {
         )
     }
 
+    /// Goes back a question
+    /// and returns said (current) question
+    ///
+    /// Returns
+    /// -------
+    /// Optional[str]
     fn back<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<String>> {
         RUNTIME.block_on(
             async move {
@@ -102,36 +141,43 @@ impl Akinator {
         )
     }
 
+    /// :class:`Theme`: the theme of the akinator game
     #[getter]
     fn theme(&self) -> Theme {
         self.0.theme.into()
     }
 
+    /// :class:`Language`: the language of the akinator game
     #[getter]
     fn language(&self) -> Language {
         self.0.language.into()
     }
 
+    /// bool: whether `child_mode` is on or off for the akinator game
     #[getter]
     const fn child_mode(&self) -> bool {
         self.0.child_mode
     }
 
+    /// Optional[str]: the current question of the akinator game
     #[getter]
     fn question(&self) -> Option<String> {
         self.0.current_question.clone()
     }
 
+    /// float: the progression of the akinator
     #[getter]
     const fn progression(&self) -> f32 {
         self.0.progression
     }
 
+    /// int: a counter for the question # the akinator is on currently
     #[getter]
     const fn step(&self) -> usize {
         self.0.step
     }
 
+    /// Optional[:class:`Guess`]: the akinator's best guess
     #[getter]
     fn first_guess(&self) -> Option<Guess> {
         self.0.first_guess
@@ -139,6 +185,7 @@ impl Akinator {
             .map(Guess)
     }
 
+    /// List[:class:`Guess`]: a list of all the akinator's potential guesses, ordered
     #[getter]
     fn guesses(&self) -> Vec<Guess> {
         self.0.guesses

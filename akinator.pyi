@@ -1,11 +1,15 @@
 from __future__ import annotations
 
-from typing import Optional, List
+from typing import Optional, List, Type
 
 class Theme:
     Characters: Theme
     Animals: Theme
     Objects: Theme
+
+    @classmethod
+    def from_str(cls: Type[Theme], theme: str) -> Theme:
+        ...
 
 class Answer:
     Yes: Answer
@@ -13,6 +17,10 @@ class Answer:
     Idk: Answer
     Probably: Answer
     ProbablyNot: Answer
+
+    @classmethod
+    def from_str(cls: Type[Answer], answer: str) -> Answer:
+        ...
 
 class Language:
     English: Language
@@ -31,6 +39,10 @@ class Language:
     Russian: Language
     Turkish: Language
     Indonesian: Language
+
+    @classmethod
+    def from_str(cls: Type[Language], language: str) -> Language:
+        ...
 
 class Guess:
     @property
@@ -138,3 +150,27 @@ class Akinator:
     @property.setter
     def set_child_mode(self, child_mode: bool) -> None:
         ...
+
+class CantGoBackAnyFurther(Exception):
+    ...
+
+class InvalidAnswer(Exception):
+    ...
+
+class InvalidLanguage(Exception):
+    ...
+
+class ConnectionError(Exception):
+    ...
+
+class NoMoreQuestions(Exception):
+    ...
+
+class TimeoutError(Exception):
+    ...
+
+class TechnicalError(Exception):
+    ...
+
+class ServersDown(Exception):
+    ...
