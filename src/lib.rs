@@ -195,16 +195,19 @@ impl Akinator {
             .collect()
     }
 
+    /// property setter to set `self.theme`
     #[setter]
     fn set_theme(&mut self, theme: Theme) {
         self.0.theme = theme.into();
     }
 
+    /// property setter to set `self.language`
     #[setter]
     fn set_language(&mut self, language: Language) {
         self.0.language = language.into();
     }
 
+    /// property setter to set `self.child_mode`
     #[setter]
     fn set_child_mode(&mut self, child_mode: bool) {
         self.0.child_mode = child_mode;
