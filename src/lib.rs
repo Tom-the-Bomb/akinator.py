@@ -21,6 +21,7 @@ lazy_static! {
     static ref RUNTIME: Runtime = Runtime::new().unwrap();
 }
 
+
 /// Represents an akinator game
 ///
 /// Parameters

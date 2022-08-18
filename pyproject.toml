@@ -1,5 +1,5 @@
 [project]
-name = "akinator"
+name = "akinator.py"
 author = "Tom-the-Bomb"
 version = "0.1.0"
 license = { file = "LICENSE" }
