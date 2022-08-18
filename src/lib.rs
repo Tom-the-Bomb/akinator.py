@@ -54,6 +54,15 @@ impl Akinator {
         Self(akinator)
     }
 
+    fn __repr__(&self) -> String {
+        format!(
+            "<Akinator theme={:?} language={:?} child_mode={}>",
+            self.theme(),
+            self.language(),
+            self.child_mode(),
+        )
+    }
+
     fn start_game<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<String>> {
         RUNTIME.block_on(
             async move {

@@ -1,4 +1,7 @@
 use pyo3::prelude::*;
+use pyo3::types::PyType;
+
+use crate::error::Error;
 use akinator_rs::enums::{
     Theme as ThemeEnum,
     Answer as AnswerEnum,
@@ -53,6 +56,58 @@ pub enum Language {
     Russian,
     Turkish,
     Indonesian,
+}
+
+#[pymethods]
+impl Answer {
+    #[classmethod]
+    fn from_str(_cls: &PyType, answer: String) -> PyResult<Self> {
+        AnswerEnum::try_from(answer)
+            .map_err(|e| Error::from(e).into())
+            .map(Self::from)
+    }
+
+    fn __repr__(&self) -> String {
+        format!("<Answer answer=\"{:?}\"", self)
+    }
+
+    fn __str__(&self) -> String {
+        format!("{:?}", self)
+    }
+}
+
+#[pymethods]
+impl Theme {
+    #[classmethod]
+    fn from_str(_cls: &PyType, theme: String) -> Self {
+        Self::from(ThemeEnum::from(theme))
+    }
+
+    fn __repr__(&self) -> String {
+        format!("<Theme theme=\"{:?}\"", self)
+    }
+
+    fn __str__(&self) -> String {
+        format!("{:?}", self)
+    }
+}
+
+#[pymethods]
+impl Language {
+    #[classmethod]
+    fn from_str(_cls: &PyType, language: String) -> PyResult<Self> {
+        LanguageEnum::try_from(language)
+            .map_err(|e| Error::from(e).into())
+            .map(Self::from)
+    }
+
+    fn __repr__(&self) -> String {
+        format!("<Language lang=\"{:?}\"", self)
+    }
+
+    fn __str__(&self) -> String {
+        format!("{:?}", self)
+    }
 }
 
 impl From<AnswerEnum> for Answer {

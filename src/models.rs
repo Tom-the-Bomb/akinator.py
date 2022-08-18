@@ -10,6 +10,16 @@ pub struct Guess(
 
 #[pymethods]
 impl Guess {
+
+    fn __repr__(&self) -> String {
+        format!(
+            "<Guess id={} name={} ranking={}>",
+            self.id(),
+            self.name(),
+            self.ranking(),
+        )
+    }
+
     #[getter]
     const fn id(&self) -> &String {
         &self.0.id
