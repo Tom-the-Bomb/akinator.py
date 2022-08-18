@@ -9,12 +9,17 @@ use crate::{
 };
 
 use akinator_rs::Akinator as AkinatorStruct;
+use lazy_static::lazy_static;
 use tokio::runtime::Runtime;
 use pyo3::prelude::*;
 
 pub mod enums;
 pub mod error;
 pub mod models;
+
+lazy_static! {
+    static ref RUNTIME: Runtime = Runtime::new().unwrap();
+}
 
 #[pyclass]
 #[derive(Debug, Clone)]
@@ -50,7 +55,7 @@ impl Akinator {
     }
 
     fn start_game<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<String>> {
-        Runtime::new()?.block_on(
+        RUNTIME.block_on(
             async move {
                 self.0.start().await
                     .map_err(|e| Error::from(e).into())
@@ -59,7 +64,7 @@ impl Akinator {
     }
 
     fn answer<'a>(&'a mut self, _py: Python<'a>, answer: Answer) -> PyResult<Option<String>> {
-        Runtime::new()?.block_on(
+        RUNTIME.block_on(
             async move {
                 self.0.answer(answer.into()).await
                     .map_err(|e| Error::from(e).into())
@@ -68,7 +73,7 @@ impl Akinator {
     }
 
     fn win<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<Guess>> {
-        Runtime::new()?.block_on(
+        RUNTIME.block_on(
             async move {
                 self.0.win().await
                     .map(|result| {
@@ -80,7 +85,7 @@ impl Akinator {
     }
 
     fn back<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<String>> {
-        Runtime::new()?.block_on(
+        RUNTIME.block_on(
             async move {
                 self.0.back().await
                     .map_err(|e| Error::from(e).into())

@@ -28,5 +28,6 @@ crate-type = ["cdylib"]
 
 [dependencies]
 akinator-rs = "0.1"
-tokio = { version = "1.20", features = ["rt"] }
+lazy_static = "1.4"
+tokio = { version = "1.20", features = ["rt", "rt-multi-thread"] }
 pyo3 = { version = "0.16", features = ["extension-module", "abi3-py37"] }
