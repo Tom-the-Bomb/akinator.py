@@ -56,7 +56,7 @@ impl Akinator {
 
     fn __repr__(&self) -> String {
         format!(
-            "<Akinator theme={:?} language={:?} child_mode={}>",
+            "<Akinator theme=\"{:?}\" language=\"{:?}\" child_mode={}>",
             self.theme(),
             self.language(),
             self.child_mode(),

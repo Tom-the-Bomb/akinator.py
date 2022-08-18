@@ -13,7 +13,7 @@ impl Guess {
 
     fn __repr__(&self) -> String {
         format!(
-            "<Guess id={} name={} ranking={}>",
+            "<Guess id=\"{}\" name=\"{}\" ranking={}>",
             self.id(),
             self.name(),
             self.ranking(),
