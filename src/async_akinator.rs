@@ -7,12 +7,14 @@ use crate::{
     error::Error,
     models::Guess,
 };
+
 use tokio::sync::RwLock;
 use std::sync::Arc;
 
 use akinator_rs::Akinator as AkinatorStruct;
 use pyo3_asyncio::tokio::future_into_py as to_coro;
 use pyo3::prelude::*;
+
 
 /// Represents an async akinator game
 ///
@@ -150,6 +152,8 @@ impl AsyncAkinator {
     ///
     /// Goes back a question
     /// and returns said (current) question
+    ///
+    /// Raises :class:`CantGoBackAnyFurther` on the event that we are already on the first question
     ///
     /// Returns
     /// -------

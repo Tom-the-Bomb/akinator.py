@@ -126,6 +126,8 @@ impl Akinator {
     /// Goes back a question
     /// and returns said (current) question
     ///
+    /// Raises :class:`CantGoBackAnyFurther` on the event that we are already on the first question
+    ///
     /// Returns
     /// -------
     /// Optional[str]
