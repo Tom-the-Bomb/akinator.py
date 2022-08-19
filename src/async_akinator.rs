@@ -66,6 +66,15 @@ impl AsyncAkinator {
         )
     }
 
+    fn __repr__(&self) -> String {
+        format!(
+            "<AsyncAkinator theme=\"{:?}\" language=\"{:?}\" child_mode={}>",
+            self.theme(),
+            self.language(),
+            self.child_mode(),
+        )
+    }
+
     /// *coroutine*
     ///
     /// Starts the akinator game
