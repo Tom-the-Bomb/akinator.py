@@ -151,6 +151,76 @@ class Akinator:
     def set_child_mode(self, child_mode: bool) -> None:
         ...
 
+class AsyncAkinator:
+    def __init__(
+        self,
+        *,
+        theme: Optional[Theme] = None,
+        language: Optional[Language] = None,
+        child_mode: Optional[bool] = None,
+    ) -> None:
+        ...
+
+    async def start_game(self) -> Optional[str]:
+        ...
+
+    async def answer(self, answer: Answer) -> Optional[str]:
+        ...
+
+    async def win(self) -> Optional[Guess]:
+        ...
+
+    async def back(self) -> Optional[str]:
+        ...
+
+    @property
+    def theme(self) -> Theme:
+        ...
+
+    @property
+    def language(self) -> Language:
+        ...
+
+    @property
+    def child_mode(self) -> bool:
+        ...
+
+    @property
+    def question(self) -> Optional[str]:
+        ...
+
+    @property
+    def progression(self) -> float:
+        ...
+
+    @property
+    def step(self) -> int:
+        ...
+
+    @property
+    def first_guess(self) -> Optional[Guess]:
+        ...
+
+    @property
+    def guesses(self) -> List[Guess]:
+        ...
+
+    @property
+    def absolute_picture_path(self) -> str:
+        ...
+
+    @property.setter
+    def set_theme(self, theme: Theme) -> None:
+        ...
+
+    @property.setter
+    def set_language(self, language: Language) -> None:
+        ...
+
+    @property.setter
+    def set_child_mode(self, child_mode: bool) -> None:
+        ...
+
 class CantGoBackAnyFurther(Exception):
     ...
 
