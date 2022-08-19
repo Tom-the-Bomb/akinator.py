@@ -135,19 +135,15 @@ class Akinator:
     def guesses(self) -> List[Guess]:
         ...
 
-    @property
-    def absolute_picture_path(self) -> str:
-        ...
-
-    @property.setter
+    @theme.setter
     def set_theme(self, theme: Theme) -> None:
         ...
 
-    @property.setter
+    @language.setter
     def set_language(self, language: Language) -> None:
         ...
 
-    @property.setter
+    @child_mode.setter
     def set_child_mode(self, child_mode: bool) -> None:
         ...
 
@@ -205,19 +201,15 @@ class AsyncAkinator:
     def guesses(self) -> List[Guess]:
         ...
 
-    @property
-    def absolute_picture_path(self) -> str:
-        ...
-
-    @property.setter
+    @theme.setter
     def set_theme(self, theme: Theme) -> None:
         ...
 
-    @property.setter
+    @language.setter
     def set_language(self, language: Language) -> None:
         ...
 
-    @property.setter
+    @child_mode.setter
     def set_child_mode(self, child_mode: bool) -> None:
         ...
 
