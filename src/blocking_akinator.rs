@@ -20,6 +20,8 @@ lazy_static! {
 
 /// Represents an akinator game
 ///
+/// Parameters are also set as properties which also have a setter to change the values if necessary in the future
+///
 /// Parameters
 /// ----------
 /// theme : Optional[:class:`Theme`]
@@ -29,8 +31,6 @@ lazy_static! {
 ///     the language for the akinator game, refer to the ``Language`` enum
 /// child_mode : Optional[bool]
 ///     when set to ``True``, NSFW content will not be provided
-///
-/// The parameters are also set as properties which also have a setter to change the values if necessary in the future
 #[pyclass]
 #[derive(Debug, Clone)]
 pub struct Akinator(

@@ -22,6 +22,8 @@ use pyo3::prelude::*;
 ///     All attributes and methods are the same as the blocking :class:`Akinator` class
 ///     but instead all methods should be awaited
 ///
+/// Parameters are also set as properties which also have a setter to change the values if necessary in the future
+///
 /// Parameters
 /// ----------
 /// theme : Optional[:class:`Theme`]
@@ -31,8 +33,6 @@ use pyo3::prelude::*;
 ///     the language for the akinator game, refer to the :class:`Language` enum
 /// child_mode : Optional[bool]
 ///     when set to ``True``, NSFW content will not be provided
-///
-/// The parameters are also set as properties which also have a setter to change the values if necessary in the future
 #[pyclass]
 #[derive(Debug, Clone)]
 pub struct AsyncAkinator(
