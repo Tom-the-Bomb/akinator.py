@@ -39,7 +39,7 @@ impl Guess {
         &self.0.award_id
     }
 
-    /// int: flag photo
+    /// :class:`int`: flag photo
     #[getter]
     const fn flag_photo(&self) -> usize {
         self.0.flag_photo

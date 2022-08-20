@@ -38,6 +38,7 @@ use pyo3::{
 ///     when set to ``True``, NSFW content will not be provided
 #[pyclass]
 #[derive(Debug, Clone)]
+#[pyo3(text_signature = "(*, theme, language, child_mode)")]
 pub struct AsyncAkinator(
     Arc<RwLock<AkinatorStruct>>,
 );
@@ -88,6 +89,19 @@ impl AsyncAkinator {
     /// Returns
     /// -------
     /// Optional[:class:`str`]
+    ///
+    /// Raises
+    /// ------
+    /// :class:`RuntimeError`
+    ///     Something internal went wrong, this could be in this case:
+    ///         - getting the starting timestamp failed
+    ///         - the data required to start the game such as the server url, frontaddr or game UID could not be found
+    ///         - request error: any sort of error when making the HTTP requests
+    ///         - updating the internal data fields errored (either a field was missing or was of the wrong type)
+    /// :class:`ValueError`
+    ///     Could not parse the returned JSON properly (invalid, missing fields etc.)
+    /// ``Other api errors``
+    ///     Refer to the exceptions at the bottom of the page
     fn start_game<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a PyAny> {
         let cloned = self.0.clone();
 
@@ -108,9 +122,27 @@ impl AsyncAkinator {
     /// with the provided ``answer``
     /// and returns the next question
     ///
+    /// Parameters
+    /// ----------
+    /// answer : :class:`Answer`
+    ///     the answer to the current question
+    ///
     /// Returns
     /// -------
     /// Optional[:class:`str`]
+    ///
+    /// Raises
+    /// ------
+    /// :class:`RuntimeError`
+    ///     Something internal went wrong, this could be in this case:
+    ///         - missing required data to continue
+    ///         - request error: any sort of error when making the HTTP requests
+    ///         - updating the internal data fields errored (either a field was missing or was of the wrong type)
+    /// :class:`ValueError`
+    ///     Could not parse the returned JSON properly (invalid, missing fields etc.)
+    /// ``Other api errors``
+    ///     Refer to the exceptions at the bottom of the page
+    #[pyo3(text_signature = "(self, answer)")]
     fn answer<'a>(&'a mut self, py: Python<'a>, answer: Answer) -> PyResult<&'a PyAny> {
         let cloned = self.0.clone();
 
@@ -134,6 +166,18 @@ impl AsyncAkinator {
     /// Returns
     /// -------
     /// Optional[:class:`Guess`]
+    ///
+    /// Raises
+    /// ------
+    /// :class:`RuntimeError`
+    ///     Something internal went wrong, this could be in this case:
+    ///         - missing required data to continue
+    ///         - request error: any sort of error when making the HTTP requests
+    ///         - updating the internal data fields errored (either a field was missing or was of the wrong type)
+    /// :class:`ValueError`
+    ///     Could not parse the returned JSON properly (invalid, missing fields etc.)
+    /// ``Other api errors``
+    ///     Refer to the exceptions at the bottom of the page
     fn win<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a PyAny> {
         let cloned = self.0.clone();
 
@@ -156,11 +200,23 @@ impl AsyncAkinator {
     /// Goes back a question
     /// and returns said (current) question
     ///
-    /// Raises :class:`CantGoBackAnyFurther` on the event that we are already on the first question
-    ///
     /// Returns
     /// -------
     /// Optional[:class:`str`]
+    ///
+    /// Raises
+    /// ------
+    /// :class:`CantGoBackAnyFurther`
+    ///     Could not go back anymore, likely that we are already on the first question
+    /// :class:`RuntimeError`
+    ///     Something internal went wrong, this could be in this case:
+    ///         - missing required data to continue
+    ///         - request error: any sort of error when making the HTTP requests
+    ///         - updating the internal data fields errored (either a field was missing or was of the wrong type)
+    /// :class:`ValueError`
+    ///     Could not parse the returned JSON properly (invalid, missing fields etc.)
+    /// ``Other api errors``
+    ///     Refer to the exceptions at the bottom of the page
     fn back<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a PyAny> {
         let cloned = self.0.clone();
 

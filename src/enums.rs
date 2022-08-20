@@ -81,8 +81,12 @@ impl Answer {
     ///     - ``probably | p | 3`` -> ``Answer.Probably``
     ///     - ``probably not | pn | 4`` -> ``Answer.ProbablyNot``
     ///
-    /// Raises :class:`InvalidAnswer` if the provided answer cannot match one of the above (is invalid)
+    /// Raises
+    /// ------
+    /// :class:`InvalidAnswer`
+    ///     raised if the provided answer cannot match one of the above (is invalid)
     #[classmethod]
+    #[pyo3(text_signature = "(self, answer)")]
     fn from_str(_cls: &PyType, answer: String) -> PyResult<Self> {
         AnswerEnum::try_from(answer)
             .map_err(|e| Error::from(e).into())
@@ -107,6 +111,7 @@ impl Theme {
     ///     if an invalid string for the theme is given, no error will be raised
     ///     instead it will just fallback to ``Theme.Characters`` as the default
     #[classmethod]
+    #[pyo3(text_signature = "(self, theme)")]
     fn from_str(_cls: &PyType, theme: String) -> Self {
         Self::from(ThemeEnum::from(theme))
     }
@@ -127,8 +132,12 @@ impl Language {
     ///
     /// Short forms such as ``en`` or ``fr`` are also accepted along with the full name
     ///
-    /// Raises :class:`InvalidLanguage` if the given string is of an invalid language
+    /// Raises
+    /// ------
+    /// :class:`InvalidLanguage`
+    ///     Raised if the given string is of an invalid language
     #[classmethod]
+    #[pyo3(text_signature = "(self, language)")]
     fn from_str(_cls: &PyType, language: String) -> PyResult<Self> {
         LanguageEnum::try_from(language)
             .map_err(|e| Error::from(e).into())
