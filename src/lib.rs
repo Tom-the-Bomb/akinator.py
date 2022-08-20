@@ -1,5 +1,6 @@
 //! Python bindings for ``akinator-rs``, a wrapper around the undocumented akinator API
-//! designed for easy implementation of an akinator game in code, providing a simple, easy to use API.
+//!
+//! designed for easy implementation of an akinator game in code, providing a simple and easy to use API.
 
 use crate::{
     enums::{
@@ -22,7 +23,8 @@ pub mod models;
 
 
 /// Python bindings for ``akinator-rs``, a wrapper around the undocumented akinator API
-/// designed for easy implementation of an akinator game in code, providing a simple, easy to use API.
+///
+/// designed for easy implementation of an akinator game in code, providing a simple and easy to use API.
 #[pymodule]
 fn akinator(py: Python<'_>, module: &PyModule) -> PyResult<()> {
     module.add_class::<AsyncAkinator>()?;

@@ -11,6 +11,7 @@ Akinator.py documentation
    :caption: Contents:
 
    API Reference <akinator.rst>
+   Examples <examples.rst>
 
 
 Indices and tables
