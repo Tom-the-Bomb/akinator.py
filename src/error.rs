@@ -1,9 +1,11 @@
-use pyo3::prelude::*;
-use pyo3::create_exception;
-use pyo3::exceptions::{
-    PyException,
-    PyValueError,
-    PyRuntimeError,
+use pyo3::{
+    prelude::*,
+    create_exception,
+    exceptions::{
+        PyException,
+        PyValueError,
+        PyRuntimeError,
+    }
 };
 
 use std::sync::PoisonError;
@@ -11,7 +13,7 @@ use akinator_rs::error::Error as AkiError;
 
 
 macro_rules! create_exceptions {
-    ( $(( $name: ident, $doc: expr )),* $(,)* ) => {
+    ( $(( $name:ident, $doc:expr )),* $(,)* ) => {
         $(
             create_exception!(
                 akinator,

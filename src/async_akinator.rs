@@ -13,7 +13,10 @@ use std::sync::Arc;
 
 use akinator_rs::Akinator as AkinatorStruct;
 use pyo3_asyncio::tokio::future_into_py as to_coro;
-use pyo3::prelude::*;
+use pyo3::{
+    prelude::*,
+    PyAny,
+};
 
 
 /// Represents an async akinator game
@@ -31,7 +34,7 @@ use pyo3::prelude::*;
 ///     pass in using an answer enum, using the ``from_str`` classmethod if necessary, defaults to ``Characters``
 /// language : Optional[:class:`Language`]
 ///     the language for the akinator game, refer to the :class:`Language` enum
-/// child_mode : Optional[bool]
+/// child_mode : Optional[:class:`bool`]
 ///     when set to ``True``, NSFW content will not be provided
 #[pyclass]
 #[derive(Debug, Clone)]
@@ -77,7 +80,7 @@ impl AsyncAkinator {
         )
     }
 
-    /// *coroutine*
+    /// |coro|
     ///
     /// Starts the akinator game
     /// and returns the first question
@@ -85,7 +88,7 @@ impl AsyncAkinator {
     /// Returns
     /// -------
     /// Optional[:class:`str`]
-    fn start_game<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a pyo3::PyAny> {
+    fn start_game<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a PyAny> {
         let cloned = self.0.clone();
 
         to_coro(py,
@@ -99,7 +102,7 @@ impl AsyncAkinator {
         )
     }
 
-    /// *coroutine*
+    /// |coro|
     ///
     /// Answers the akinator's current question
     /// with the provided ``answer``
@@ -108,7 +111,7 @@ impl AsyncAkinator {
     /// Returns
     /// -------
     /// Optional[:class:`str`]
-    fn answer<'a>(&'a mut self, py: Python<'a>, answer: Answer) -> PyResult<&'a pyo3::PyAny> {
+    fn answer<'a>(&'a mut self, py: Python<'a>, answer: Answer) -> PyResult<&'a PyAny> {
         let cloned = self.0.clone();
 
         to_coro(py,
@@ -122,7 +125,7 @@ impl AsyncAkinator {
         )
     }
 
-    /// *coroutine*
+    /// |coro|
     ///
     /// Tells the akinator to end the game and make its guess
     /// should be called once when the ``progression`` is high enough such as ``>=80.0``
@@ -131,7 +134,7 @@ impl AsyncAkinator {
     /// Returns
     /// -------
     /// Optional[:class:`Guess`]
-    fn win<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a pyo3::PyAny> {
+    fn win<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a PyAny> {
         let cloned = self.0.clone();
 
         to_coro(py,
@@ -148,7 +151,7 @@ impl AsyncAkinator {
         )
     }
 
-    /// *coroutine*
+    /// |coro|
     ///
     /// Goes back a question
     /// and returns said (current) question
@@ -158,7 +161,7 @@ impl AsyncAkinator {
     /// Returns
     /// -------
     /// Optional[:class:`str`]
-    fn back<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a pyo3::PyAny> {
+    fn back<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a PyAny> {
         let cloned = self.0.clone();
 
         to_coro(py,

@@ -35,12 +35,24 @@ extensions = [
     'sphinx.ext.extlinks',
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
+    'sphinxext.opengraph',
+    'sphinx_copybutton',
 ]
 
 autodoc_typehints = 'both'
 napoleon_google_docstring = False
 napoleon_numpy_docstring = True
 autodoc_member_order = 'bysource'
+
+rst_prolog = """
+.. |coro| replace:: This function is a |coroutine_link|_.
+.. |coroutine_link| replace:: *coroutine*
+.. _coroutine_link: https://docs.python.org/3/library/asyncio-task.html#coroutine
+"""
+
+intersphinx_mapping = {
+    'py': ('https://docs.python.org/3', None),
+}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

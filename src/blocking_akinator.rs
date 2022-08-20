@@ -29,7 +29,7 @@ lazy_static! {
 ///     pass in using an answer enum, using the ``from_str`` classmethod if necessary, defaults to ``Characters``
 /// language : Optional[:class:`Language`]
 ///     the language for the akinator game, refer to the ``Language`` enum
-/// child_mode : Optional[bool]
+/// child_mode : Optional[:class:`bool`]
 ///     when set to ``True``, NSFW content will not be provided
 #[pyclass]
 #[derive(Debug, Clone)]

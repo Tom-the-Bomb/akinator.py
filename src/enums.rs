@@ -1,5 +1,7 @@
-use pyo3::prelude::*;
-use pyo3::types::PyType;
+use pyo3::{
+    prelude::*,
+    types::PyType,
+};
 
 use crate::error::Error;
 use akinator_rs::enums::{
@@ -72,12 +74,12 @@ impl Answer {
     /// a classmethod to return an :class:`Answer` enum variant parsing from a :class:`str`
     /// useful when you have external user input
     ///
-    /// aliases for answer variants are also accepted (trims WS & case-insensitive):
-    ///     - ``yes | y | 0`` => ``Answer.Yes``
-    ///     - ``no | n | 1`` => ``Answer.No``
-    ///     - ``i don(')?t know | idk | 2`` => ``Answer.Idk``
-    ///     - ``probably | p | 3`` => ``Answer.Probably``
-    ///     - ``probably not | pn | 4`` => ``Answer.ProbablyNot``
+    /// aliases for answer variants are also accepted (trims ws & case-insensitive):
+    ///     - ``yes | y | 0`` -> ``Answer.Yes``
+    ///     - ``no | n | 1`` -> ``Answer.No``
+    ///     - ``i don(')?t know | idk | 2`` -> ``Answer.Idk``
+    ///     - ``probably | p | 3`` -> ``Answer.Probably``
+    ///     - ``probably not | pn | 4`` -> ``Answer.ProbablyNot``
     ///
     /// Raises :class:`InvalidAnswer` if the provided answer cannot match one of the above (is invalid)
     #[classmethod]
