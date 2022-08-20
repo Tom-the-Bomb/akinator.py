@@ -73,11 +73,11 @@ impl Answer {
     /// useful when you have external user input
     ///
     /// aliases for answer variants are also accepted (trims WS & case-insensitive):
-    ///     - `yes | y | 0` => `Answer.Yes
-    ///     - `no | n | 1` => `Answer.No`
-    ///     - `i don(')?t know | idk | 2` => `Answer.Idk`
-    ///     - `probably | p | 3` => `Answer.Probably`
-    ///     - `probably not | pn | 4` => `Answer.ProbablyNot`
+    ///     - ``yes | y | 0`` => ``Answer.Yes``
+    ///     - ``no | n | 1`` => ``Answer.No``
+    ///     - ``i don(')?t know | idk | 2`` => ``Answer.Idk``
+    ///     - ``probably | p | 3`` => ``Answer.Probably``
+    ///     - ``probably not | pn | 4`` => ``Answer.ProbablyNot``
     ///
     /// Raises :class:`InvalidAnswer` if the provided answer cannot match one of the above (is invalid)
     #[classmethod]
@@ -103,7 +103,7 @@ impl Theme {
     ///
     /// .. note ::
     ///     if an invalid string for the theme is given, no error will be raised
-    ///     instead it will just fallback to `Theme.Characters` as the default
+    ///     instead it will just fallback to ``Theme.Characters`` as the default
     #[classmethod]
     fn from_str(_cls: &PyType, theme: String) -> Self {
         Self::from(ThemeEnum::from(theme))
@@ -123,7 +123,7 @@ impl Language {
     /// a classmethod to return a :class:`Language` enum variant parsing from a :class:`str`
     /// useful when you have external user input
     ///
-    /// Short forms such as `en` or `fr` are also accepted along with the full name
+    /// Short forms such as ``en`` or ``fr`` are also accepted along with the full name
     ///
     /// Raises :class:`InvalidLanguage` if the given string is of an invalid language
     #[classmethod]

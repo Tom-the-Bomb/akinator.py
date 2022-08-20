@@ -11,6 +11,14 @@ requires-python = ">=3.7"
 homepage = "https://github.com/Tom-the-Bomb/akinator.py"
 repository = "https://github.com/Tom-the-Bomb/akinator.py"
 
+[project.optional-dependencies]
+docs = [
+    "sphinx",
+    "furo",
+    "sphinxext-opengraph",
+    "sphinx-copybutton"
+]
+
 [build-system]
 requires = ["maturin>=0.13,<0.14"]
 build-backend = "maturin"

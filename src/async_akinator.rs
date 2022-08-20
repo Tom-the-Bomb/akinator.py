@@ -19,18 +19,18 @@ use pyo3::prelude::*;
 /// Represents an async akinator game
 ///
 /// .. note ::
-///     All attributes and methods are the same as the blocking `Akinator` class
+///     All attributes and methods are the same as the blocking :class:`Akinator` class
 ///     but instead all methods should be awaited
 ///
 /// Parameters
 /// ----------
 /// theme : Optional[:class:`Theme`]
-///     the theme of the akinator game, would be one of `Characters`, `Animals` or `Objects`
-///     pass in using an answer enum, using the `from_str` classmethod if necessary, defaults to `Characters`
+///     the theme of the akinator game, would be one of ``Characters``, ``Animals`` or ``Objects``
+///     pass in using an answer enum, using the ``from_str`` classmethod if necessary, defaults to ``Characters``
 /// language : Optional[:class:`Language`]
-///     the language for the akinator game, refer to the `Language` enum
+///     the language for the akinator game, refer to the :class:`Language` enum
 /// child_mode : Optional[bool]
-///     when set to `True`, NSFW content will not be provided
+///     when set to ``True``, NSFW content will not be provided
 ///
 /// The parameters are also set as properties which also have a setter to change the values if necessary in the future
 #[pyclass]
@@ -84,7 +84,7 @@ impl AsyncAkinator {
     ///
     /// Returns
     /// -------
-    /// Optional[str]
+    /// Optional[:class:`str`]
     fn start_game<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a pyo3::PyAny> {
         let cloned = self.0.clone();
 
@@ -102,12 +102,12 @@ impl AsyncAkinator {
     /// *coroutine*
     ///
     /// Answers the akinator's current question
-    /// with the provided `answer`
+    /// with the provided ``answer``
     /// and returns the next question
     ///
     /// Returns
     /// -------
-    /// Optional[str]
+    /// Optional[:class:`str`]
     fn answer<'a>(&'a mut self, py: Python<'a>, answer: Answer) -> PyResult<&'a pyo3::PyAny> {
         let cloned = self.0.clone();
 
@@ -125,7 +125,7 @@ impl AsyncAkinator {
     /// *coroutine*
     ///
     /// Tells the akinator to end the game and make its guess
-    /// should be called once when the `progression` is high enough such as `>=80.0`
+    /// should be called once when the ``progression`` is high enough such as ``>=80.0``
     /// and returns its best guess
     ///
     /// Returns
@@ -157,7 +157,7 @@ impl AsyncAkinator {
     ///
     /// Returns
     /// -------
-    /// Optional[str]
+    /// Optional[:class:`str`]
     fn back<'a>(&'a mut self, py: Python<'a>) -> PyResult<&'a pyo3::PyAny> {
         let cloned = self.0.clone();
 
@@ -190,7 +190,7 @@ impl AsyncAkinator {
         reader.language.into()
     }
 
-    /// bool: whether `child_mode` is on or off for the akinator game
+    /// :class:`bool`: whether ``child_mode`` is on or off for the akinator game
     #[getter]
     fn child_mode(&self) -> bool {
         let reader = self.0
@@ -199,7 +199,7 @@ impl AsyncAkinator {
         reader.child_mode
     }
 
-    /// Optional[str]: the current question of the akinator game
+    /// Optional[:class:`str`]: the current question of the akinator game
     #[getter]
     fn question(&self) -> Option<String> {
         let reader = self.0
@@ -208,7 +208,7 @@ impl AsyncAkinator {
         reader.current_question.clone()
     }
 
-    /// float: the progression of the akinator
+    /// :class:`float`: the progression of the akinator
     #[getter]
     fn progression(&self) -> f32 {
         let reader = self.0
@@ -217,7 +217,7 @@ impl AsyncAkinator {
         reader.progression
     }
 
-    /// int: a counter for the question # the akinator is on currently
+    /// :class:`int`: a counter for the question # the akinator is on currently
     #[getter]
     fn step(&self) -> usize {
         let reader = self.0
@@ -237,7 +237,7 @@ impl AsyncAkinator {
             .map(Guess)
     }
 
-    /// List[:class:`Guess`]: a list of all the akinator's potential guesses, ordered
+    /// List[:class:`Guess`]: a list of all the akinator's potential guesses, ordered by likeliness
     #[getter]
     fn guesses(&self) -> Vec<Guess> {
         let reader = self.0
@@ -250,7 +250,7 @@ impl AsyncAkinator {
             .collect()
     }
 
-    /// property setter to set `self.theme`
+    /// property setter to set ``self.theme``
     #[setter]
     fn set_theme(&mut self, theme: Theme) {
         let mut writer = self.0
@@ -259,7 +259,7 @@ impl AsyncAkinator {
         writer.theme = theme.into();
     }
 
-    /// property setter to set `self.language`
+    /// property setter to set ``self.language``
     #[setter]
     fn set_language(&mut self, language: Language) {
         let mut writer = self.0
@@ -268,7 +268,7 @@ impl AsyncAkinator {
         writer.language = language.into();
     }
 
-    /// property setter to set `self.child_mode`
+    /// property setter to set ``self.child_mode``
     #[setter]
     fn set_child_mode(&mut self, child_mode: bool) {
         let mut writer = self.0

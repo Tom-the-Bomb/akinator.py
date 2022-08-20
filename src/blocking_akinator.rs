@@ -23,12 +23,12 @@ lazy_static! {
 /// Parameters
 /// ----------
 /// theme : Optional[:class:`Theme`]
-///     the theme of the akinator game, would be one of `Characters`, `Animals` or `Objects`
-///     pass in using an answer enum, using the `from_str` classmethod if necessary, defaults to `Characters`
+///     the theme of the akinator game, would be one of ``Characters``, ``Animals`` or ``Objects``
+///     pass in using an answer enum, using the ``from_str`` classmethod if necessary, defaults to ``Characters``
 /// language : Optional[:class:`Language`]
-///     the language for the akinator game, refer to the `Language` enum
+///     the language for the akinator game, refer to the ``Language`` enum
 /// child_mode : Optional[bool]
-///     when set to `True`, NSFW content will not be provided
+///     when set to ``True``, NSFW content will not be provided
 ///
 /// The parameters are also set as properties which also have a setter to change the values if necessary in the future
 #[pyclass]
@@ -78,7 +78,7 @@ impl Akinator {
     ///
     /// Returns
     /// -------
-    /// Optional[str]
+    /// Optional[:class:`str`]
     fn start_game<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<String>> {
         RUNTIME.block_on(
             async move {
@@ -89,12 +89,12 @@ impl Akinator {
     }
 
     /// Answers the akinator's current question
-    /// with the provided `answer`
+    /// with the provided ``answer``
     /// and returns the next question
     ///
     /// Returns
     /// -------
-    /// Optional[str]
+    /// Optional[:class:`str`]
     fn answer<'a>(&'a mut self, _py: Python<'a>, answer: Answer) -> PyResult<Option<String>> {
         RUNTIME.block_on(
             async move {
@@ -105,7 +105,7 @@ impl Akinator {
     }
 
     /// Tells the akinator to end the game and make its guess
-    /// should be called once when the `progression` is high enough such as `>=80.0`
+    /// should be called once when the ``progression`` is high enough such as ``>=80.0``
     /// and returns its best guess
     ///
     /// Returns
@@ -130,7 +130,7 @@ impl Akinator {
     ///
     /// Returns
     /// -------
-    /// Optional[str]
+    /// Optional[:class:`str`]
     fn back<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<String>> {
         RUNTIME.block_on(
             async move {
@@ -152,25 +152,25 @@ impl Akinator {
         self.0.language.into()
     }
 
-    /// bool: whether `child_mode` is on or off for the akinator game
+    /// :class:`bool`: whether ``child_mode`` is on or off for the akinator game
     #[getter]
     const fn child_mode(&self) -> bool {
         self.0.child_mode
     }
 
-    /// Optional[str]: the current question of the akinator game
+    /// Optional[:class:`str`]: the current question of the akinator game
     #[getter]
     fn question(&self) -> Option<String> {
         self.0.current_question.clone()
     }
 
-    /// float: the progression of the akinator
+    /// :class:`float`: the progression of the akinator
     #[getter]
     const fn progression(&self) -> f32 {
         self.0.progression
     }
 
-    /// int: a counter for the question # the akinator is on currently
+    /// :class:`int`: a counter for the question # the akinator is on currently
     #[getter]
     const fn step(&self) -> usize {
         self.0.step
@@ -194,19 +194,19 @@ impl Akinator {
             .collect()
     }
 
-    /// property setter to set `self.theme`
+    /// property setter to set ``self.theme``
     #[setter]
     fn set_theme(&mut self, theme: Theme) {
         self.0.theme = theme.into();
     }
 
-    /// property setter to set `self.language`
+    /// property setter to set ``self.language``
     #[setter]
     fn set_language(&mut self, language: Language) {
         self.0.language = language.into();
     }
 
-    /// property setter to set `self.child_mode`
+    /// property setter to set ``self.child_mode``
     #[setter]
     fn set_child_mode(&mut self, child_mode: bool) {
         self.0.child_mode = child_mode;
