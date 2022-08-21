@@ -90,7 +90,7 @@ impl Akinator {
     ///         - request error: any sort of error when making the HTTP requests
     ///         - updating the internal data fields errored (either a field was missing or was of the wrong type)
     /// :class:`ValueError`
-    ///     Could not parse the returned JSON properly (invalid, missing fields etc.)
+    ///     Could not parse the API returned JSON properly (invalid, missing fields etc.)
     /// ``Other api errors``
     ///     Refer to the exceptions at the bottom of the page
     fn start_game<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<String>> {
@@ -123,7 +123,7 @@ impl Akinator {
     ///         - request error: any sort of error when making the HTTP requests
     ///         - updating the internal data fields errored (either a field was missing or was of the wrong type)
     /// :class:`ValueError`
-    ///     Could not parse the returned JSON properly (invalid, missing fields etc.)
+    ///     Could not parse the API returned JSON properly (invalid, missing fields etc.)
     /// ``Other api errors``
     ///     Refer to the exceptions at the bottom of the page
     #[pyo3(text_signature = "(self, answer)")]
@@ -152,7 +152,7 @@ impl Akinator {
     ///         - request error: any sort of error when making the HTTP requests
     ///         - updating the internal data fields errored (either a field was missing or was of the wrong type)
     /// :class:`ValueError`
-    ///     Could not parse the returned JSON properly (invalid, missing fields etc.)
+    ///     Could not parse the API returned JSON properly (invalid, missing fields etc.)
     /// ``Other api errors``
     ///     Refer to the exceptions at the bottom of the page
     fn win<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<Guess>> {
@@ -184,7 +184,7 @@ impl Akinator {
     ///         - request error: any sort of error when making the HTTP requests
     ///         - updating the internal data fields errored (either a field was missing or was of the wrong type)
     /// :class:`ValueError`
-    ///     Could not parse the returned JSON properly (invalid, missing fields etc.)
+    ///     Could not parse the API returned JSON properly (invalid, missing fields etc.)
     /// ``Other api errors``
     ///     Refer to the exceptions at the bottom of the page
     fn back<'a>(&'a mut self, _py: Python<'a>) -> PyResult<Option<String>> {

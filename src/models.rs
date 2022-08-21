@@ -3,7 +3,7 @@ use akinator_rs::models::Guess as GuessModel;
 
 
 /// a model class representing an akinator's guess
-/// not meant for the user to construct, but is returned in various properties and methods in the `Akinator` class
+/// not meant for the user to construct, but is returned in various properties and methods in the :class:`Akinator` class
 #[pyclass]
 #[derive(Debug, Clone)]
 pub struct Guess(

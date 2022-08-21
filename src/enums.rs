@@ -81,6 +81,11 @@ impl Answer {
     ///     - ``probably | p | 3`` -> ``Answer.Probably``
     ///     - ``probably not | pn | 4`` -> ``Answer.ProbablyNot``
     ///
+    /// Parameters
+    /// ----------
+    /// answer : :class:`str`
+    ///     the string representation of the answer to parse from
+    ///
     /// Raises
     /// ------
     /// :class:`InvalidAnswer`
@@ -107,6 +112,11 @@ impl Theme {
     /// a classmethod to return a :class:`Theme` enum variant parsing from a :class:`str`
     /// useful when you have external user input
     ///
+    /// Parameters
+    /// ----------
+    /// theme : :class:`str`
+    ///     the string representation of the theme to parse from
+    ///
     /// .. note ::
     ///     if an invalid string for the theme is given, no error will be raised
     ///     instead it will just fallback to ``Theme.Characters`` as the default
@@ -131,6 +141,11 @@ impl Language {
     /// useful when you have external user input
     ///
     /// Short forms such as ``en`` or ``fr`` are also accepted along with the full name
+    ///
+    /// Parameters
+    /// ----------
+    /// language : :class:`str`
+    ///     the string representation of the language to parse from
     ///
     /// Raises
     /// ------
