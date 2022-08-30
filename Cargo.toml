@@ -27,8 +27,8 @@ name = "akinator"
 crate-type = ["cdylib"]
 
 [dependencies]
-akinator-rs = "0.1"
 lazy_static = "1.4"
 pyo3-asyncio = { version = "0.16", features = ["tokio-runtime"] }
+akinator-rs = { git = "https://github.com/Tom-the-Bomb/akinator-rs" }
 tokio = { version = "1.20", features = ["sync", "rt", "rt-multi-thread"] }
 pyo3 = { version = "0.16", features = ["extension-module", "abi3-py37"] }

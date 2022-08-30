@@ -31,14 +31,17 @@ use pyo3::{
 /// ----------
 /// theme : Optional[:class:`Theme`]
 ///     the theme of the akinator game, would be one of ``Characters``, ``Animals`` or ``Objects``
-///     pass in using an answer enum, using the ``from_str`` classmethod if necessary, defaults to ``Characters``
+///     pass in using an answer enum, using the ``from_str`` classmethod if necessary,
+///     defaults to ``Characters``
 /// language : Optional[:class:`Language`]
-///     the language for the akinator game, refer to the :class:`Language` enum
+///     the language for the akinator game, refer to the :class:`Language` enum,
+///     defaults to ``English``
 /// child_mode : Optional[:class:`bool`]
-///     when set to ``True``, NSFW content will not be provided
+///     when set to ``True``, NSFW content will not be provided,
+///     defaults to ``False``
 #[pyclass]
 #[derive(Debug, Clone)]
-#[pyo3(text_signature = "(*, theme, language, child_mode)")]
+#[pyo3(text_signature = "(*, theme = None, language = None, child_mode = None)")]
 pub struct AsyncAkinator(
     Arc<RwLock<AkinatorStruct>>,
 );
