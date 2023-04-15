@@ -1,7 +1,7 @@
 [project]
 name = "akinator.py"
 author = "Tom-the-Bomb"
-version = "0.2.2"
+version = "0.2.3"
 license = { file = "LICENSE" }
 description = "Python bindings for akinator-rs"
 readme = "README.md"
