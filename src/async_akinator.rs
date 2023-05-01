@@ -54,9 +54,10 @@ impl AsyncAkinator {
         theme: Option<Theme>,
         language: Option<Language>,
         child_mode: Option<bool>,
-    ) -> Self {
+    ) -> PyResult<Self> {
         let mut akinator =
-            AkinatorStruct::new();
+            AkinatorStruct::new()
+            .map_err(|e| Error::from(e))?;
 
         if let Some(theme) = theme {
             akinator = akinator.with_theme(theme.into());
@@ -70,9 +71,9 @@ impl AsyncAkinator {
             akinator = akinator.with_child_mode();
         }
 
-        Self(
+        Ok(Self(
             Arc::new(RwLock::new(akinator))
-        )
+        ))
     }
 
     fn __repr__(&self) -> String {
