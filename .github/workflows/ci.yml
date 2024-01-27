@@ -1,6 +1,6 @@
 name: Python Binding
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build: # Workflow credit to https://github.com/Cryptex-github/ril-py/blob/main/.github/workflows/py-binding.yml
