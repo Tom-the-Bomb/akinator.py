@@ -57,7 +57,7 @@ impl AsyncAkinator {
     ) -> PyResult<Self> {
         let mut akinator =
             AkinatorStruct::new()
-            .map_err(|e| Error::from(e))?;
+            .map_err(Error::from)?;
 
         if let Some(theme) = theme {
             akinator = akinator.with_theme(theme.into());

@@ -1,3 +1,5 @@
+#![allow(clippy::trivially_copy_pass_by_ref)]
+
 use pyo3::{
     prelude::*,
     types::PyType,
@@ -99,11 +101,11 @@ impl Answer {
     }
 
     fn __repr__(&self) -> String {
-        format!("<Answer answer=\"{:?}\">", self)
+        format!("<Answer answer=\"{self:?}\">")
     }
 
     fn __str__(&self) -> String {
-        format!("{:?}", self)
+        format!("{self:?}")
     }
 }
 
@@ -127,11 +129,11 @@ impl Theme {
     }
 
     fn __repr__(&self) -> String {
-        format!("<Theme theme=\"{:?}\">", self)
+        format!("<Theme theme=\"{self:?}\">")
     }
 
     fn __str__(&self) -> String {
-        format!("{:?}", self)
+        format!("{self:?}")
     }
 }
 
@@ -160,11 +162,11 @@ impl Language {
     }
 
     fn __repr__(&self) -> String {
-        format!("<Language lang=\"{:?}\">", self)
+        format!("<Language lang=\"{self:?}\">")
     }
 
     fn __str__(&self) -> String {
-        format!("{:?}", self)
+        format!("{self:?}")
     }
 }
 
